@@ -1,8 +1,44 @@
 import { Tree } from 'antd';
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { data } from '@/data/functions';
+import Grid from './grid';
+import Query from './query';
+import Rule from './rule';
+import Status from './status';
+import Detail from './detail';
 
 const Content = () => {
+	const [selectedTab, setSelectedTab] = useState(null);
+
+	const onSelect = (selectedKeys, info) => {
+		const selectedTabName = info.node.type;
+		setSelectedTab(selectedTabName);
+	};
+
+	const renderContent = () => {
+		switch (selectedTab) {
+			case 'grid': {
+				return <Grid />;
+			}
+			case 'status': {
+				return <Status />;
+			}
+			case 'query': {
+				return <Query />;
+			}
+			case 'detail': {
+				return <Detail />;
+			}
+			case 'rule': {
+				return <Rule />;
+			}
+			default: {
+				return <div>boş</div>;
+			}
+		}
+	};
+
 	return (
 		<Container
 			fluid
@@ -33,13 +69,14 @@ const Content = () => {
 							<Tree
 								defaultExpandedKeys={['0-0', '0-0-1', '0-0-2-0']}
 								treeData={data}
+								onSelect={onSelect}
 							/>
 						</Col>
 					</Row>
 				</Col>
 				<Col md={9}>
 					<Row>
-						<Col>CONTENT</Col>
+						<Col>{renderContent()}</Col>
 					</Row>
 				</Col>
 			</Row>
