@@ -22,15 +22,15 @@ const treeData = [
 					},
 					{
 						title: 'Queries',
-						key: '0-0-1-0'
+						key: '0-0-2-0'
 					},
 					{
 						title: 'Detail Page',
-						key: '0-0-2-0',
+						key: '0-0-3-0',
 						children: [
 							{
 								title: 'Rules',
-								key: '0-0-2-1'
+								key: '0-0-3-1'
 							}
 						]
 					}
