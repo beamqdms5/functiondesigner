@@ -1,44 +1,6 @@
 import { Tree } from 'antd';
 import { Container, Row, Col } from 'react-bootstrap';
-
-const treeData = [
-	{
-		title: 'Functions',
-		key: '0-0',
-		expanded: true,
-		children: [
-			{
-				title: 'Work Order',
-				key: '0-0-0',
-				children: []
-			},
-			{
-				title: 'Work Request',
-				key: '0-0-1',
-				children: [
-					{
-						title: 'Statuses',
-						key: '0-0-1-0'
-					},
-					{
-						title: 'Queries',
-						key: '0-0-2-0'
-					},
-					{
-						title: 'Detail Page',
-						key: '0-0-3-0',
-						children: [
-							{
-								title: 'Rules',
-								key: '0-0-3-1'
-							}
-						]
-					}
-				]
-			}
-		]
-	}
-];
+import { data } from '@/data/functions';
 
 const Content = () => {
 	return (
@@ -70,7 +32,7 @@ const Content = () => {
 						>
 							<Tree
 								defaultExpandedKeys={['0-0', '0-0-1', '0-0-2-0']}
-								treeData={treeData}
+								treeData={data}
 							/>
 						</Col>
 					</Row>
