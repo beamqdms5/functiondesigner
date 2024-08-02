@@ -1,20 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Table } from 'antd';
+import { initialColumns } from '@/data/queries';
 
 const ItemType = 'ROW';
-
-const initialVisibleColumn = [
-	{ id: '1', name: 'Code' },
-	{ id: '2', name: 'Name' },
-	{ id: '3', name: 'Department' }
-];
-
-const initialHiddenColumn = [
-	{ id: '4', name: 'Id' },
-	{ id: '5', name: 'Provider' }
-];
 
 const DraggableRow = ({ record, index, moveRow, fromTable }) => {
 	const ref = useRef(null);
@@ -50,7 +40,7 @@ const DraggableRow = ({ record, index, moveRow, fromTable }) => {
 	);
 };
 
-const DroppableBody = ({ data, setData, fromTable, moveRow }) => {
+const DroppableBody = ({ data, fromTable, moveRow }) => {
 	const [, drop] = useDrop({
 		accept: ItemType,
 		drop: draggedItem => {
@@ -87,8 +77,15 @@ const DroppableBody = ({ data, setData, fromTable, moveRow }) => {
 };
 
 const Query = () => {
-	const [visibleColumn, setVisibleColumn] = useState(initialVisibleColumn);
-	const [hiddenColumn, setHiddenColumn] = useState(initialHiddenColumn);
+	const [visibleColumn, setVisibleColumn] = useState([]);
+	const [hiddenColumn, setHiddenColumn] = useState([]);
+
+	useEffect(() => {
+		const visibleCols = initialColumns.filter(col => col.visible);
+		const hiddenCols = initialColumns.filter(col => !col.visible);
+		setVisibleColumn(visibleCols);
+		setHiddenColumn(hiddenCols);
+	}, []);
 
 	const moveRow = (fromIndex, toIndex, fromTable, toTable) => {
 		const fromData = fromTable === 'visibleColumn' ? visibleColumn : hiddenColumn;
