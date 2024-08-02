@@ -1,7 +1,148 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Table } from 'antd';
+
+const ItemType = 'ROW';
+
+const initialVisibleColumn = [
+	{ id: '1', name: 'Code' },
+	{ id: '2', name: 'Name' },
+	{ id: '3', name: 'Department' }
+];
+
+const initialHiddenColumn = [
+	{ id: '4', name: 'Id' },
+	{ id: '5', name: 'Provider' }
+];
+
+const DraggableRow = ({ record, index, moveRow, fromTable }) => {
+	const ref = useRef(null);
+	const [, drop] = useDrop({
+		accept: ItemType,
+		hover: draggedItem => {
+			if (draggedItem.index !== index || draggedItem.fromTable !== fromTable) {
+				moveRow(draggedItem.index, index, draggedItem.fromTable, fromTable);
+				draggedItem.index = index;
+				draggedItem.fromTable = fromTable;
+			}
+		}
+	});
+
+	const [{ isDragging }, drag] = useDrag({
+		type: ItemType,
+		item: { index, record, fromTable },
+		collect: monitor => ({
+			isDragging: monitor.isDragging()
+		})
+	});
+
+	drag(drop(ref));
+
+	return (
+		<tr
+			ref={ref}
+			style={{ opacity: isDragging ? 0.5 : 1 }}
+			className="ant-table-row"
+		>
+			<td>{record.name}</td>
+		</tr>
+	);
+};
+
+const DroppableBody = ({ data, setData, fromTable, moveRow }) => {
+	const [, drop] = useDrop({
+		accept: ItemType,
+		drop: draggedItem => {
+			if (data.length === 0) {
+				moveRow(draggedItem.index, 0, draggedItem.fromTable, fromTable);
+				draggedItem.index = 0;
+				draggedItem.fromTable = fromTable;
+			}
+		}
+	});
+
+	return (
+		<tbody
+			ref={drop}
+			className="ant-table-tbody"
+		>
+			{data.length === 0 ? (
+				<tr className="ant-table-row">
+					<td style={{ height: '40px' }} />
+				</tr>
+			) : (
+				data.map((record, index) => (
+					<DraggableRow
+						key={record.id}
+						record={record}
+						index={index}
+						moveRow={moveRow}
+						fromTable={fromTable}
+					/>
+				))
+			)}
+		</tbody>
+	);
+};
 
 const Query = () => {
-	return <Container>Query</Container>;
+	const [visibleColumn, setVisibleColumn] = useState(initialVisibleColumn);
+	const [hiddenColumn, setHiddenColumn] = useState(initialHiddenColumn);
+
+	const moveRow = (fromIndex, toIndex, fromTable, toTable) => {
+		const fromData = fromTable === 'visibleColumn' ? visibleColumn : hiddenColumn;
+		const toData = toTable === 'visibleColumn' ? visibleColumn : hiddenColumn;
+
+		if (fromTable === toTable) {
+			const movedItem = fromData.splice(fromIndex, 1)[0];
+			fromData.splice(toIndex, 0, movedItem);
+			if (fromTable === 'visibleColumn') setVisibleColumn([...fromData]);
+			else setHiddenColumn([...fromData]);
+		} else {
+			const movedItem = fromData.splice(fromIndex, 1)[0];
+			toData.splice(toIndex, 0, movedItem);
+			if (fromTable === 'visibleColumn') {
+				setVisibleColumn([...fromData]);
+				setHiddenColumn([...toData]);
+			} else {
+				setHiddenColumn([...fromData]);
+				setVisibleColumn([...toData]);
+			}
+		}
+	};
+
+	const renderTable = (data, setData, fromTable) => (
+		<Table
+			columns={[{ title: 'Name', dataIndex: 'name', key: 'name' }]}
+			dataSource={data}
+			pagination={false}
+			rowKey="id"
+			components={{
+				body: {
+					wrapper: props => (
+						<DroppableBody
+							{...props}
+							data={data}
+							setData={setData}
+							fromTable={fromTable}
+							moveRow={moveRow}
+						/>
+					),
+					row: DraggableRow
+				}
+			}}
+		/>
+	);
+
+	return (
+		<DndProvider backend={HTML5Backend}>
+			<div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+				{renderTable(visibleColumn, setVisibleColumn, 'visibleColumn')}
+				{renderTable(hiddenColumn, setHiddenColumn, 'hiddenColumn')}
+			</div>
+		</DndProvider>
+	);
 };
 
 export default Query;
