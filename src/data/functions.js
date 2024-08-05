@@ -40,22 +40,22 @@ export const data = [
 				children: [
 					{
 						title: 'Statuses',
-						key: '0-0-2-0',
+						key: '0-0-2-1',
 						type: 'status'
 					},
 					{
 						title: 'Queries',
-						key: '0-0-2-1',
+						key: '0-0-2-2',
 						type: 'query'
 					},
 					{
 						title: 'Detail Page',
-						key: '0-0-2-3',
+						key: '0-0-2-4',
 						type: 'detail',
 						children: [
 							{
 								title: 'Rules',
-								key: '0-0-2-4',
+								key: '0-0-2-5',
 								type: 'rule'
 							}
 						]
