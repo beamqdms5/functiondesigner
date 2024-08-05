@@ -1,6 +1,6 @@
+import BCButton from '@/commons/components/button';
 import CustomDndTables from '@/components/customdndtables';
 import { initialColumns } from '@/data/queries';
-import { Button } from 'antd';
 import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -29,7 +29,7 @@ const Query = () => {
 					onColumnsChange={handleColumnsChange}
 				/>
 				<div className="d-flex align-items justify-content">
-					<Button onClick={handlePrintColumns}>Print Columns to Console</Button>
+					<BCButton onClick={handlePrintColumns}>Print Columns to Console</BCButton>
 				</div>
 			</div>
 		</DndProvider>
