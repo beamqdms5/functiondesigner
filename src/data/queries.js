@@ -5,8 +5,7 @@ export const initialColumns = [
 		name: 'code',
 		visible: true,
 		isPrimaryKey: false,
-		order: 1,
-		valueType: 'text'
+		order: 1
 	},
 	{
 		id: '2',
@@ -14,8 +13,7 @@ export const initialColumns = [
 		name: 'name',
 		visible: true,
 		isPrimaryKey: false,
-		order: 2,
-		valueType: 'text'
+		order: 2
 	},
 	{
 		id: '3',
@@ -23,8 +21,7 @@ export const initialColumns = [
 		name: 'department',
 		visible: true,
 		isPrimaryKey: false,
-		order: 3,
-		valueType: 'select'
+		order: 3
 	},
 	{
 		id: '4',
@@ -32,8 +29,7 @@ export const initialColumns = [
 		name: 'id',
 		visible: false,
 		isPrimaryKey: true,
-		order: 4,
-		valueType: 'number'
+		order: 4
 	},
 	{
 		id: '5',
@@ -41,7 +37,6 @@ export const initialColumns = [
 		name: 'provider',
 		visible: false,
 		isPrimaryKey: false,
-		order: 5,
-		valueType: 'select'
+		order: 5
 	}
 ];

@@ -3,33 +3,6 @@ import { Drawer, Form, Button, Input, Checkbox } from 'antd';
 import BCInput from '@/commons/components/input';
 import BCSelect from '@/commons/components/select';
 
-const typeOptions = [
-	{
-		value: 'text',
-		label: 'Text'
-	},
-	{
-		value: 'number',
-		label: 'Number'
-	},
-	{
-		value: 'boolean',
-		label: 'Boolean'
-	},
-	{
-		value: 'date',
-		label: 'Date'
-	},
-	{
-		value: 'select',
-		label: 'Select'
-	},
-	{
-		value: 'file',
-		label: 'File'
-	}
-];
-
 const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 	const [form] = Form.useForm();
 
@@ -98,16 +71,6 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 					valuePropName="checked"
 				>
 					<Checkbox>Primary Key</Checkbox>
-				</Form.Item>
-				<Form.Item
-					name="valueType"
-					label="Type"
-					rules={[{ required: true, message: 'Please enter the column name' }]}
-				>
-					<BCSelect
-						placeholder="Select type"
-						options={typeOptions}
-					/>
 				</Form.Item>
 			</Form>
 		</Drawer>
