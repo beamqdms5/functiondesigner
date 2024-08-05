@@ -40,7 +40,7 @@ const Content = () => {
 			fluid
 			className="vh-100 d-flex flex-column content"
 		>
-			<Row className="vh-100">
+			<Row>
 				<Col
 					className="menu"
 					md={3}
