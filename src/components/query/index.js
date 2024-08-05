@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomDndTables from '@/components/CustomDndTables';
+import CustomDndTables from '@/components/customdndtables';
 import { Button } from 'antd';
 import { initialColumns } from '@/data/queries';
 import { DndProvider } from 'react-dnd';
