@@ -50,6 +50,13 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 				name="add_column_form"
 			>
 				<Form.Item
+					name="header"
+					label="Column Header"
+					rules={[{ required: true, message: 'Please enter the column header' }]}
+				>
+					<BCInput placeholder="Enter column header" />
+				</Form.Item>
+				<Form.Item
 					name="name"
 					label="Column Name"
 					rules={[{ required: true, message: 'Please enter the column name' }]}
