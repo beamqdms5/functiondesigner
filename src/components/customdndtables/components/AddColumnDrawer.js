@@ -48,6 +48,7 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 				form={form}
 				layout="vertical"
 				name="add_column_form"
+				initialValues={{ isPrimaryKey: false }}
 			>
 				<Form.Item
 					name="header"
@@ -62,6 +63,13 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 					rules={[{ required: true, message: 'Please enter the column name' }]}
 				>
 					<BCInput placeholder="Enter column name" />
+				</Form.Item>
+				<Form.Item
+					name="isPrimaryKey"
+					label="Primary Key?"
+					valuePropName="checked"
+				>
+					<Checkbox>Primary Key</Checkbox>
 				</Form.Item>
 			</Form>
 		</Drawer>
