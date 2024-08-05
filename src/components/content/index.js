@@ -20,24 +20,18 @@ const Content = () => {
 
 	const renderContent = () => {
 		switch (selectedTab) {
-			case 'grid': {
+			case 'grid':
 				return <Grid />;
-			}
-			case 'status': {
+			case 'status':
 				return <Status />;
-			}
-			case 'query': {
+			case 'query':
 				return <Query />;
-			}
-			case 'detail': {
+			case 'detail':
 				return <Detail />;
-			}
-			case 'rule': {
+			case 'rule':
 				return <Rule />;
-			}
-			default: {
+			default:
 				return <div>boş</div>;
-			}
 		}
 	};
 
