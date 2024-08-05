@@ -1,7 +1,7 @@
 export const initialColumns = [
-	{ id: '1', name: 'code', header: 'Code', visible: true, order: 1 },
-	{ id: '2', name: 'name', header: 'Name', visible: true, order: 2 },
-	{ id: '3', name: 'department', header: 'Department', visible: true, order: 3 },
-	{ id: '4', name: 'id', header: 'Id', visible: false, isPrimaryKey: true, order: 4 },
-	{ id: '5', name: 'provider', header: 'Provider', visible: false, order: 5 }
+	{ id: '1', header: 'Code', name: 'code', visible: true, order: 1 },
+	{ id: '2', header: 'Name', name: 'name', visible: true, order: 2 },
+	{ id: '3', header: 'Department', name: 'department', visible: true, order: 3 },
+	{ id: '4', header: 'Id', name: 'id', visible: false, isPrimaryKey: true, order: 4 },
+	{ id: '5', header: 'Provider', name: 'provider', visible: false, order: 5 }
 ];
