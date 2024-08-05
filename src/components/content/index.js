@@ -8,7 +8,7 @@ import Query from '@/components/query';
 import Rule from '@/components/rule';
 import Status from '@/components/status';
 
-import BCTree from '../../commons/components/tree';
+import BCTree from '@/commons/components/tree';
 
 const Content = () => {
 	const [selectedTab, setSelectedTab] = useState(null);
