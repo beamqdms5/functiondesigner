@@ -65,3 +65,15 @@ a {
 .content .menu {
 	border-right: 1px solid #dddddd;
 }
+
+.d-flex {
+	display: flex;
+}
+
+.align-items {
+	align-items: center;
+}
+
+.justify-content {
+	justify-content: center;
+}
