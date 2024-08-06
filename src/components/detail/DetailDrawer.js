@@ -5,6 +5,10 @@ import BCSelect from '@/commons/components/select';
 
 const typeOptions = [
 	{
+		value: 'column',
+		label: 'Column'
+	},
+	{
 		value: 'text',
 		label: 'Text'
 	},
