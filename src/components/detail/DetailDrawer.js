@@ -45,7 +45,7 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form }) => {
 
 	return (
 		<Drawer
-			title="Add Node"
+			title="Add Field"
 			open={isOpen}
 			onClose={onClose}
 			width={320}
