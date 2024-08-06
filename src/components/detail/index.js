@@ -3,6 +3,7 @@ import { Form } from 'antd';
 import BCTree from '@/commons/components/tree';
 import { initialData } from '@/data/detailData';
 import DetailDrawer from './DetailDrawer';
+import { v4 as uuidv4 } from 'uuid';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
@@ -66,8 +67,13 @@ const DetailPage = () => {
 		setTreeData(data);
 	};
 
-	const addNode = (key, newNodeTitle) => {
-		const newNode = { title: newNodeTitle, key: `${key}-${Date.now()}` };
+	const addNode = (key, values) => {
+		const newNode = {
+			key: uuidv4(),
+			title: values.title,
+			type: values.type,
+			name: values.name
+		};
 		const updateTreeData = (list, key, children) => {
 			return list.map(node => {
 				if (node.key === key) {
@@ -85,6 +91,7 @@ const DetailPage = () => {
 			newNode
 		]);
 		setTreeData(updatedTreeData);
+		console.log(newNode);
 	};
 
 	const findNode = (list, key) => {
