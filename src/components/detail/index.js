@@ -3,20 +3,18 @@ import { Form, Button } from 'antd';
 import BCTree from '@/commons/components/tree';
 import { initialData } from '@/data/detailData';
 import DetailDrawer from './DetailDrawer';
-import { onDrop, addNode, findNode } from './functions/helper';
+import { onDrop, addNode } from './functions/helper';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
 	const [isDrawerVisible, setisDrawerVisible] = useState(false);
-	const [selectedKey, setSelectedKey] = useState(null);
 	const [form] = Form.useForm();
 
 	const handleDrop = info => onDrop(info, treeData, setTreeData);
 
 	const handleAddNode = values => addNode(values, treeData, setTreeData);
 
-	const showModal = key => {
-		setSelectedKey(key);
+	const showModal = () => {
 		setisDrawerVisible(true);
 	};
 
@@ -25,14 +23,7 @@ const DetailPage = () => {
 		form.resetFields();
 	};
 
-	const onSelect = (keys, event) => {
-		if (event.node) {
-			showModal(event.node.key);
-		}
-	};
-
 	const handleAddButtonClick = () => {
-		setSelectedKey(null);
 		setisDrawerVisible(true);
 	};
 
@@ -44,7 +35,7 @@ const DetailPage = () => {
 				onClick={handleAddButtonClick}
 				style={{ marginBottom: 16 }}
 			>
-				Add Node
+				Add Field
 			</Button>
 			<BCTree
 				className="draggable-tree"
@@ -52,7 +43,7 @@ const DetailPage = () => {
 				blockNode
 				onDrop={handleDrop}
 				treeData={treeData}
-				onSelect={onSelect}
+				onSelect={showModal}
 				defaultExpandAll
 			/>
 			<DetailDrawer
