@@ -65,6 +65,7 @@ const Content = () => {
 							<BCTree
 								defaultExpandedKeys={['0-0', '0-0-1', '0-0-2-0']}
 								treeData={data}
+								blockNode
 								onSelect={onSelect}
 							/>
 						</Col>
