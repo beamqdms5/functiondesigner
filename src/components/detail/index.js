@@ -45,11 +45,11 @@ const DetailPage = () => {
 		<div>
 			<h1>Detail Page</h1>
 			<Button
-				type="primary"
+				type="dashed"
 				onClick={handleAddButtonClick}
 				style={{ marginBottom: 16 }}
 			>
-				Add Node
+				Add Field
 			</Button>
 			<BCTree
 				className="draggable-tree"
