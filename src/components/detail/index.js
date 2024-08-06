@@ -3,18 +3,30 @@ import { Form, Button } from 'antd';
 import BCTree from '@/commons/components/tree';
 import { initialData } from '@/data/detailData';
 import DetailDrawer from './DetailDrawer';
-import { onDrop, addNode } from './functions/helper';
+import { onDrop, addNode, updateNode, findNode } from './functions/helper';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
 	const [isDrawerVisible, setisDrawerVisible] = useState(false);
+	const [selectedNode, setSelectedNode] = useState(null);
 	const [form] = Form.useForm();
 
 	const handleDrop = info => onDrop(info, treeData, setTreeData);
 
-	const handleAddNode = values => addNode(values, treeData, setTreeData);
+	const handleAddNode = values => {
+		if (selectedNode) {
+			const updatedValues = { ...selectedNode, ...values };
+			updateNode(updatedValues, treeData, setTreeData);
+		} else {
+			addNode(values, treeData, setTreeData);
+		}
+		setSelectedNode(null);
+	};
 
-	const showModal = () => {
+	const showDrawer = key => {
+		const node = findNode(treeData, key);
+		setSelectedNode(node);
+		form.setFieldsValue(node);
 		setisDrawerVisible(true);
 	};
 
@@ -24,6 +36,8 @@ const DetailPage = () => {
 	};
 
 	const handleAddButtonClick = () => {
+		setSelectedNode(null);
+		form.resetFields();
 		setisDrawerVisible(true);
 	};
 
@@ -31,11 +45,11 @@ const DetailPage = () => {
 		<div>
 			<h1>Detail Page</h1>
 			<Button
-				type="dashed"
+				type="primary"
 				onClick={handleAddButtonClick}
 				style={{ marginBottom: 16 }}
 			>
-				Add Field
+				Add Node
 			</Button>
 			<BCTree
 				className="draggable-tree"
@@ -43,7 +57,7 @@ const DetailPage = () => {
 				blockNode
 				onDrop={handleDrop}
 				treeData={treeData}
-				onSelect={showModal}
+				onSelect={(keys, event) => showDrawer(event.node.key)}
 				defaultExpandAll
 			/>
 			<DetailDrawer
@@ -51,6 +65,7 @@ const DetailPage = () => {
 				onClose={handleClose}
 				onAddNode={handleAddNode}
 				form={form}
+				selectedNode={selectedNode}
 			/>
 		</div>
 	);

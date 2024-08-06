@@ -88,3 +88,11 @@ export const addNode = (values, treeData, setTreeData) => {
 	setTreeData(data);
 	console.log(newNode);
 };
+
+export const updateNode = (values, treeData, setTreeData) => {
+	const data = [...treeData];
+	loop(data, values.key, (item, index, arr) => {
+		arr[index] = { ...item, ...values };
+	});
+	setTreeData(data);
+};

@@ -34,7 +34,7 @@ const typeOptions = [
 	}
 ];
 
-const DetailDrawer = ({ isOpen, onClose, onAddNode, form }) => {
+const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
 	const handleOk = () => {
 		form.validateFields().then(values => {
 			onAddNode(values);
@@ -65,7 +65,7 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form }) => {
 						onClick={handleOk}
 						type="primary"
 					>
-						Add
+						{selectedNode ? 'Update' : 'Add'}
 					</BCButton>
 				</div>
 			}
