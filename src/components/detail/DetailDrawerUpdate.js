@@ -10,7 +10,10 @@ const typeOptions = [
 	{ value: 'boolean', label: 'Boolean' },
 	{ value: 'date', label: 'Date' },
 	{ value: 'select', label: 'Select' },
-	{ value: 'file', label: 'File' }
+	{ value: 'file', label: 'File' },
+	{ value: 'group', label: 'Group' },
+	{ value: 'tabs', label: 'Tabs' },
+	{ value: 'grid', label: 'Grid' }
 ];
 
 const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode }) => {
