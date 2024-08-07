@@ -5,7 +5,7 @@ export const initialData = [
 		title: 'Column 1',
 		key: uuidv4(),
 		type: `column-${uuidv4()}`,
-		name: 'column',
+		name: 'column1',
 		children: [
 			{
 				title: 'Name',
@@ -22,10 +22,23 @@ export const initialData = [
 		]
 	},
 	{
-		title: 'Category',
+		title: 'Column 2',
 		key: uuidv4(),
-		type: 'select',
-		name: 'category',
-		children: []
+		type: `column-${uuidv4()}`,
+		name: 'column2',
+		children: [
+			{
+				title: 'Category',
+				key: uuidv4(),
+				type: 'select',
+				name: 'category'
+			},
+			{
+				title: 'Description',
+				key: uuidv4(),
+				type: 'text',
+				name: 'description'
+			}
+		]
 	}
 ];

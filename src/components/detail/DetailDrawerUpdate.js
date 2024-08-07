@@ -1,43 +1,28 @@
+import { useEffect } from 'react';
 import { Drawer, Form } from 'antd';
 import BCInput from '@/commons/components/input';
 import BCButton from '@/commons/components/button';
 import BCSelect from '@/commons/components/select';
 
 const typeOptions = [
-	{
-		value: 'column',
-		label: 'Column'
-	},
-	{
-		value: 'text',
-		label: 'Text'
-	},
-	{
-		value: 'number',
-		label: 'Number'
-	},
-	{
-		value: 'boolean',
-		label: 'Boolean'
-	},
-	{
-		value: 'date',
-		label: 'Date'
-	},
-	{
-		value: 'select',
-		label: 'Select'
-	},
-	{
-		value: 'file',
-		label: 'File'
-	}
+	{ value: 'text', label: 'Text' },
+	{ value: 'number', label: 'Number' },
+	{ value: 'boolean', label: 'Boolean' },
+	{ value: 'date', label: 'Date' },
+	{ value: 'select', label: 'Select' },
+	{ value: 'file', label: 'File' }
 ];
 
-const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
+const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode }) => {
+	useEffect(() => {
+		if (selectedNode) {
+			form.setFieldsValue(selectedNode);
+		}
+	}, [selectedNode, form]);
+
 	const handleOk = () => {
 		form.validateFields().then(values => {
-			onAddNode(values);
+			onUpdateNode({ ...selectedNode, ...values });
 			onClose();
 			form.resetFields();
 		});
@@ -45,16 +30,12 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
 
 	return (
 		<Drawer
-			title="Add Field"
+			title="Update Field"
 			open={isOpen}
 			onClose={onClose}
 			width={320}
 			footer={
-				<div
-					style={{
-						textAlign: 'right'
-					}}
-				>
+				<div style={{ textAlign: 'right' }}>
 					<BCButton
 						onClick={onClose}
 						style={{ marginRight: 8 }}
@@ -65,7 +46,7 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
 						onClick={handleOk}
 						type="primary"
 					>
-						{selectedNode ? 'Update' : 'Add'}
+						Update
 					</BCButton>
 				</div>
 			}
@@ -73,7 +54,7 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
 			<Form
 				form={form}
 				layout="vertical"
-				name="addNodeForm"
+				name="updateNodeForm"
 			>
 				<Form.Item
 					name="title"
@@ -104,4 +85,4 @@ const DetailDrawer = ({ isOpen, onClose, onAddNode, form, selectedNode }) => {
 	);
 };
 
-export default DetailDrawer;
+export default DetailDrawerUpdate;
