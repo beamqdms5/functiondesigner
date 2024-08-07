@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, Button, Row, Col } from 'antd';
-import CustomTree from '@/commons/components/customTree';
+import CustomTree from './customTree';
 import { initialData } from '@/data/detailData';
 import DetailDrawerAdd from './DetailDrawerAdd';
 import DetailDrawerUpdate from './DetailDrawerUpdate';
