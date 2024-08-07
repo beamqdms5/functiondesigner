@@ -14,12 +14,14 @@ const CustomTree = ({ data, onTitleClick, onButtonClick }) => {
 				item.type.startsWith('grid') ||
 				item.type.startsWith('column');
 
+			const isGridColumn = item.type === 'gridColumn';
+
 			return (
 				<TreeNode
 					title={
 						<span>
 							<span onClick={() => onTitleClick(item)}>{item.title}</span>
-							{isColumnType && (
+							{isColumnType && !isGridColumn && (
 								<Button
 									type="text"
 									size="small"

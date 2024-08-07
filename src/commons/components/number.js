@@ -1,8 +1,9 @@
-import { InputNumber } from 'antd';
+import { Input } from 'antd';
 
 const BCInputNumber = ({ value, onChange, ...props }) => {
 	return (
-		<InputNumber
+		<Input
+			type="number"
 			value={value}
 			onChange={onChange}
 			{...props}

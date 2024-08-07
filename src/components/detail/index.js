@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button, Row, Col, Modal } from 'antd';
 import CustomTree from './customTree';
 import { initialData } from '@/data/detailData';
 import DetailDrawerAdd from './DetailDrawerAdd';
 import DetailDrawerUpdate from './DetailDrawerUpdate';
 import { onDrop, addNode, updateNode, findNode } from './functions/helper';
 import { v4 as uuidv4 } from 'uuid';
+import PreviewModal from './PreviewModal';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
 	const [isDrawerVisible, setisDrawerVisible] = useState(false);
+	const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
 	const [form] = Form.useForm();
 	const [drawerType, setDrawerType] = useState(null);
@@ -114,6 +116,14 @@ const DetailPage = () => {
 		showDrawerAdd(node);
 	};
 
+	const handlePreviewButtonClick = () => {
+		setIsPreviewVisible(true);
+	};
+
+	const handlePreviewClose = () => {
+		setIsPreviewVisible(false);
+	};
+
 	return (
 		<div>
 			<h1>Detail Page</h1>
@@ -123,6 +133,13 @@ const DetailPage = () => {
 				style={{ marginBottom: 16 }}
 			>
 				Add Field
+			</Button>
+			<Button
+				type="primary"
+				onClick={handlePreviewButtonClick}
+				style={{ marginBottom: 16, marginLeft: 8 }}
+			>
+				Preview
 			</Button>
 			<Row gutter={16}>
 				<Col span={12}>
@@ -159,6 +176,11 @@ const DetailPage = () => {
 					selectedNode={selectedNode}
 				/>
 			)}
+			<PreviewModal
+				visible={isPreviewVisible}
+				onClose={handlePreviewClose}
+				treeData={treeData}
+			/>
 		</div>
 	);
 };

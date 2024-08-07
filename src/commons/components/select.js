@@ -10,7 +10,7 @@ const BCSelect = ({ options, value, onChange, placeholder, ...props }) => {
 			placeholder={placeholder}
 			{...props}
 		>
-			{options.map((option, index) => (
+			{options?.map((option, index) => (
 				<Option
 					key={index}
 					value={option.value}
