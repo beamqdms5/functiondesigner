@@ -1,20 +1,19 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import { Tree } from 'antd';
+import { Tree, Drawer, Input, Button } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import BCButton from '@/commons/components/button';
 import CustomDndTables from '@/components/customdndtables';
 import { queries as initialQueries } from '@/data/queries';
+import { v4 as uuidv4 } from 'uuid';
 
 const Query = () => {
 	const [queries, setQueries] = useState(initialQueries);
 	const [selectedQueryId, setSelectedQueryId] = useState(initialQueries[0].id);
 	const [columns, setColumns] = useState(initialQueries[0].columns);
-
-	useEffect(() => {
-		console.log(queries);
-	}, [queries]);
+	const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+	const [newQueryName, setNewQueryName] = useState('');
 
 	const handleQuerySelect = useCallback(
 		selectedKeys => {
@@ -59,6 +58,17 @@ const Query = () => {
 		);
 	}, [selectedQueryId]);
 
+	const handleAddNewQuery = () => {
+		const newQuery = {
+			id: uuidv4(),
+			name: newQueryName,
+			columns: []
+		};
+		setQueries([...queries, newQuery]);
+		setIsDrawerVisible(false);
+		setNewQueryName('');
+	};
+
 	const treeData = useMemo(() => {
 		return queries.map(item => ({
 			title: item.name,
@@ -77,7 +87,7 @@ const Query = () => {
 								type="dashed"
 								danger
 								onClick={handleDeleteQuery}
-								disabled={queries.length < 2 ? true : false}
+								disabled={queries.length < 2}
 							>
 								Delete
 							</BCButton>
@@ -95,6 +105,13 @@ const Query = () => {
 			</Row>
 			<Row>
 				<Col md={4}>
+					<BCButton
+						type="dashed"
+						onClick={() => setIsDrawerVisible(true)}
+						className="mb-4"
+					>
+						Add New Query
+					</BCButton>
 					<Tree
 						treeData={treeData}
 						defaultExpandAll
@@ -117,6 +134,27 @@ const Query = () => {
 					</DndProvider>
 				</Col>
 			</Row>
+			<Drawer
+				title="Add New Query"
+				visible={isDrawerVisible}
+				onClose={() => setIsDrawerVisible(false)}
+				footer={
+					<div style={{ textAlign: 'right' }}>
+						<Button
+							onClick={handleAddNewQuery}
+							type="primary"
+						>
+							Add Query
+						</Button>
+					</div>
+				}
+			>
+				<Input
+					value={newQueryName}
+					onChange={e => setNewQueryName(e.target.value)}
+					placeholder="Query Name"
+				/>
+			</Drawer>
 		</Container>
 	);
 };
