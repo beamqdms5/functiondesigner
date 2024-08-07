@@ -101,23 +101,21 @@ const Query = () => {
 						onSelect={handleQuerySelect}
 					/>
 				</Col>
-				{queries.length > 0 ? (
-					<Col md={8}>
-						<DndProvider backend={HTML5Backend}>
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-								<CustomDndTables
-									initialColumns={columns}
-									onColumnsChange={handleColumnsChange}
-								/>
-								<div className="d-flex align-items justify-content">
-									<BCButton onClick={handlePrintColumns}>
-										Print Columns to Console
-									</BCButton>
-								</div>
+				<Col md={8}>
+					<DndProvider backend={HTML5Backend}>
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+							<CustomDndTables
+								initialColumns={columns}
+								onColumnsChange={handleColumnsChange}
+							/>
+							<div className="d-flex align-items justify-content">
+								<BCButton onClick={handlePrintColumns}>
+									Print Columns to Console
+								</BCButton>
 							</div>
-						</DndProvider>
-					</Col>
-				) : null}
+						</div>
+					</DndProvider>
+				</Col>
 			</Row>
 		</Container>
 	);
