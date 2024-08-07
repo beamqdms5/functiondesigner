@@ -77,7 +77,10 @@ const renderFormItem = node => {
 									tab={child.title}
 									key={child.key}
 								>
-									{renderFormItem(child)}
+									{child.children &&
+										child.children.map(grandChild =>
+											renderFormItem(grandChild)
+										)}
 								</TabPane>
 							))}
 					</Tabs>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button, Row, Col, Modal } from 'antd';
 import CustomTree from './customTree';
 import { initialData } from '@/data/detailData';
@@ -18,15 +18,19 @@ const DetailPage = () => {
 	const [selectedColumn, setSelectedColumn] = useState(null);
 	const [parentType, setParentType] = useState(null);
 
+	useEffect(() => {
+		console.log(treeData);
+	}, [treeData]);
+
 	const handleDrop = info => onDrop(info, treeData, setTreeData);
 
 	const handleAddNode = values => {
 		const { column, ...newNode } = values;
 		newNode.key = uuidv4();
 
-		if (drawerType === 'add' && selectedNode) {
-			const updatedTreeData = treeData.map(node => {
-				if (node.key === selectedNode.key) {
+		const addNodeRecursively = (nodes, targetKey, newNode) => {
+			return nodes.map(node => {
+				if (node.key === targetKey) {
 					return {
 						...node,
 						children: [...(node.children || []), newNode]
@@ -34,19 +38,15 @@ const DetailPage = () => {
 				} else if (node.children) {
 					return {
 						...node,
-						children: node.children.map(childNode => {
-							if (childNode.key === selectedNode.key) {
-								return {
-									...childNode,
-									children: [...(childNode.children || []), newNode]
-								};
-							}
-							return childNode;
-						})
+						children: addNodeRecursively(node.children, targetKey, newNode)
 					};
 				}
 				return node;
 			});
+		};
+
+		if (drawerType === 'add' && selectedNode) {
+			const updatedTreeData = addNodeRecursively(treeData, selectedNode.key, newNode);
 			setTreeData(updatedTreeData);
 		} else {
 			const updatedTreeData = treeData.map(node => {

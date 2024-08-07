@@ -19,6 +19,7 @@ const typeOptions = [
 ];
 
 const allowedChildTypes = {
+	column: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid', 'tabs'],
 	tabs: ['tab'],
 	tab: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid'],
 	group: ['text', 'number', 'boolean', 'date', 'select', 'file'],
