@@ -15,14 +15,15 @@ const typeOptions = [
 	{ value: 'tabs', label: 'Tabs' },
 	{ value: 'grid', label: 'Grid' },
 	{ value: 'tab', label: 'Tab' },
-	{ value: 'column', label: 'Column' }
+	{ value: 'gridcolumn', label: 'Grid Column' }
 ];
 
 const allowedChildTypes = {
+	column: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid', 'tabs'],
 	tabs: ['tab'],
 	tab: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid'],
 	group: ['text', 'number', 'boolean', 'date', 'select', 'file'],
-	grid: ['column']
+	grid: ['gridcolumn']
 };
 
 const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, parentType }) => {
@@ -48,6 +49,7 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 	};
 
 	const handleColumnChange = value => {
+		parentType = value;
 		setColumnSelected(value);
 		form.setFieldsValue({ column: value });
 	};

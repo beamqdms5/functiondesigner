@@ -99,7 +99,7 @@ const DetailPage = () => {
 		setSelectedNode(null);
 		setDrawerType('add');
 		setSelectedColumn(null);
-		setParentType(null);
+		setParentType('column');
 		form.resetFields();
 		setisDrawerVisible(true);
 	};

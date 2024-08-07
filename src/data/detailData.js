@@ -4,7 +4,7 @@ export const initialData = [
 	{
 		title: 'Column 1',
 		key: uuidv4(),
-		type: `col-${uuidv4()}`,
+		type: `column`,
 		name: 'column1',
 		children: [
 			{
@@ -30,7 +30,7 @@ export const initialData = [
 	{
 		title: 'Column 2',
 		key: uuidv4(),
-		type: `col-${uuidv4()}`,
+		type: `column`,
 		name: 'column2',
 		children: [
 			{

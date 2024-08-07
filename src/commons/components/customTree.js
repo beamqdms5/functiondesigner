@@ -12,7 +12,7 @@ const CustomTree = ({ data, onTitleClick, onButtonClick }) => {
 				item.type.startsWith('tabs') ||
 				item.type.startsWith('tab') ||
 				item.type.startsWith('grid') ||
-				item.type.startsWith('col-');
+				item.type.startsWith('column');
 
 			return (
 				<TreeNode
