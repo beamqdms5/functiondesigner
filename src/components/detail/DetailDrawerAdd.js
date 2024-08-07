@@ -49,7 +49,6 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 	};
 
 	const handleColumnChange = value => {
-		parentType = value;
 		setColumnSelected(value);
 		form.setFieldsValue({ column: value });
 	};
