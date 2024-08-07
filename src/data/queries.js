@@ -2,6 +2,7 @@ export const queries = [
 	{
 		id: 'query1',
 		name: 'Query 1',
+		isDefault: true,
 		columns: [
 			{ id: '1', header: 'Code', name: 'code', visible: true, isPrimaryKey: false, order: 1 },
 			{ id: '2', header: 'Name', name: 'name', visible: true, isPrimaryKey: false, order: 2 },
@@ -27,6 +28,7 @@ export const queries = [
 	{
 		id: 'query2',
 		name: 'Query 2',
+		isDefault: false,
 		columns: [
 			{
 				id: '1',
@@ -66,6 +68,7 @@ export const queries = [
 	{
 		id: 'query3',
 		name: 'Query 3',
+		isDefault: false,
 		columns: [
 			{
 				id: '1',
