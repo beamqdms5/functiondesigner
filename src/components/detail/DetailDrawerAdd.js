@@ -13,15 +13,19 @@ const typeOptions = [
 	{ value: 'file', label: 'File' },
 	{ value: 'group', label: 'Group' },
 	{ value: 'tabs', label: 'Tabs' },
-	{ value: 'grid', label: 'Grid' }
+	{ value: 'grid', label: 'Grid' },
+	{ value: 'tab', label: 'Tab' },
+	{ value: 'column', label: 'Column' }
 ];
 
-const columnOptions = [
-	{ value: 'column1', label: 'Column 1' },
-	{ value: 'column2', label: 'Column 2' }
-];
+const allowedChildTypes = {
+	tabs: ['tab'],
+	tab: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid'],
+	group: ['text', 'number', 'boolean', 'date', 'select', 'file'],
+	grid: ['column']
+};
 
-const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn }) => {
+const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, parentType }) => {
 	const [columnSelected, setColumnSelected] = useState(selectedColumn);
 
 	useEffect(() => {
@@ -76,18 +80,22 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn }) =
 				layout="vertical"
 				name="addNodeForm"
 			>
-				<Form.Item
-					name="column"
-					label="Select Column"
-					rules={[{ required: true, message: 'Please select the column!' }]}
-				>
-					<BCSelect
-						placeholder="Select column"
-						options={columnOptions}
-						onChange={handleColumnChange}
-						disabled={!!selectedColumn}
-					/>
-				</Form.Item>
+				{!selectedColumn && (
+					<Form.Item
+						name="column"
+						label="Select Column"
+						rules={[{ required: true, message: 'Please select the column!' }]}
+					>
+						<BCSelect
+							placeholder="Select column"
+							options={[
+								{ value: 'column1', label: 'Column 1' },
+								{ value: 'column2', label: 'Column 2' }
+							]}
+							onChange={handleColumnChange}
+						/>
+					</Form.Item>
+				)}
 				{columnSelected && (
 					<>
 						<Form.Item
@@ -111,7 +119,13 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn }) =
 						>
 							<BCSelect
 								placeholder="Select type"
-								options={typeOptions}
+								options={
+									allowedChildTypes[parentType]
+										? allowedChildTypes[parentType].map(type =>
+												typeOptions.find(option => option.value === type)
+											)
+										: typeOptions
+								}
 							/>
 						</Form.Item>
 					</>

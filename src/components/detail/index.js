@@ -14,6 +14,7 @@ const DetailPage = () => {
 	const [form] = Form.useForm();
 	const [drawerType, setDrawerType] = useState(null);
 	const [selectedColumn, setSelectedColumn] = useState(null);
+	const [parentType, setParentType] = useState(null);
 
 	const handleDrop = info => onDrop(info, treeData, setTreeData);
 
@@ -60,6 +61,7 @@ const DetailPage = () => {
 
 		setSelectedNode(null);
 		setSelectedColumn(null);
+		setParentType(null);
 	};
 
 	const handleUpdateNode = values => {
@@ -72,6 +74,7 @@ const DetailPage = () => {
 		setSelectedNode(node);
 		setDrawerType('add');
 		setSelectedColumn(node?.name || null);
+		setParentType(node?.type || null);
 		form.resetFields();
 		setisDrawerVisible(true);
 	};
@@ -89,12 +92,14 @@ const DetailPage = () => {
 		setSelectedNode(null);
 		setDrawerType(null);
 		setSelectedColumn(null);
+		setParentType(null);
 	};
 
 	const handleAddButtonClick = () => {
 		setSelectedNode(null);
 		setDrawerType('add');
 		setSelectedColumn(null);
+		setParentType(null);
 		form.resetFields();
 		setisDrawerVisible(true);
 	};
@@ -142,6 +147,7 @@ const DetailPage = () => {
 					onAddNode={handleAddNode}
 					form={form}
 					selectedColumn={selectedColumn}
+					parentType={parentType}
 				/>
 			)}
 			{drawerType === 'update' && (
