@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Form } from 'antd';
 import { BCButton, BCRow } from '@/commons/components';
 import { initialData } from '@/data/detailData';
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import CustomTree from './customTree';
 import DetailDrawerAdd from './DetailDrawerAdd';
 import DetailDrawerUpdate from './DetailDrawerUpdate';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { handleAddNode, handleUpdateNode, onDrop } from './functions/helper';
 import PreviewModal from './PreviewModal';
-import { onDrop, handleAddNode, handleUpdateNode } from './functions/helper';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
+	const [columns, setColumns] = useState([]);
 	const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 	const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
@@ -19,10 +20,6 @@ const DetailPage = () => {
 	const [drawerType, setDrawerType] = useState(null);
 	const [selectedColumn, setSelectedColumn] = useState(null);
 	const [parentType, setParentType] = useState(null);
-
-	useEffect(() => {
-		console.log(treeData);
-	}, [treeData]);
 
 	const handleDrop = (targetItem, draggedItem) => {
 		onDrop(targetItem, draggedItem, treeData, setTreeData);
@@ -97,30 +94,38 @@ const DetailPage = () => {
 		setIsPreviewVisible(false);
 	};
 
-	const columns = [
-		{
-			span: 12,
-			content: (
-				<CustomTree
-					data={treeData.filter(node => node.name === 'column1')}
-					onTitleClick={handleTitleClick}
-					onButtonClick={handleButtonClick}
-					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
-				/>
-			)
-		},
-		{
-			span: 12,
-			content: (
-				<CustomTree
-					data={treeData.filter(node => node.name === 'column2')}
-					onTitleClick={handleTitleClick}
-					onButtonClick={handleButtonClick}
-					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
-				/>
-			)
-		}
-	];
+	useEffect(() => {
+		const column = [
+			{
+				span: 12,
+				content: (
+					<CustomTree
+						data={treeData.filter(node => node.name === 'column1')}
+						onTitleClick={handleTitleClick}
+						onButtonClick={handleButtonClick}
+						handleDrop={(targetItem, draggedItem) =>
+							handleDrop(targetItem, draggedItem)
+						}
+					/>
+				)
+			},
+			{
+				span: 12,
+				content: (
+					<CustomTree
+						data={treeData.filter(node => node.name === 'column2')}
+						onTitleClick={handleTitleClick}
+						onButtonClick={handleButtonClick}
+						handleDrop={(targetItem, draggedItem) =>
+							handleDrop(targetItem, draggedItem)
+						}
+					/>
+				)
+			}
+		];
+
+		setColumns(column);
+	}, [columns]);
 
 	return (
 		<DndProvider backend={HTML5Backend}>
