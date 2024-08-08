@@ -1,8 +1,6 @@
+import { BCButton, BCDrawer, BCInput, BCSelect } from '@/commons/components';
+import { Form } from 'antd';
 import { useEffect } from 'react';
-import { Drawer, Form } from 'antd';
-import BCInput from '@/commons/components/input';
-import BCButton from '@/commons/components/button';
-import BCSelect from '@/commons/components/select';
 
 const typeOptions = [
 	{ value: 'text', label: 'Text' },
@@ -32,7 +30,7 @@ const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode 
 	};
 
 	return (
-		<Drawer
+		<BCDrawer
 			title="Update Field"
 			open={isOpen}
 			onClose={onClose}
@@ -84,7 +82,7 @@ const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode 
 					/>
 				</Form.Item>
 			</Form>
-		</Drawer>
+		</BCDrawer>
 	);
 };
 

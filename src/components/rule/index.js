@@ -1,7 +1,7 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Tree, Select, Input, Button, Drawer } from 'antd';
+import { BCButton, BCDrawer, BCInput, BCSelect, BCTree, Select } from '@/commons/components';
 import { rules as initialRules } from '@/data/ruleData';
+import { useCallback, useMemo, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 const { Option } = Select;
@@ -74,14 +74,14 @@ const Rule = () => {
 		<Container>
 			<Row className="my-5">
 				<Col md={4}>
-					<Button
+					<BCButton
 						type="dashed"
 						onClick={() => setIsDrawerVisible(true)}
 						className="mb-4"
 					>
 						Add New Rule
-					</Button>
-					<Tree
+					</BCButton>
+					<BCTree
 						treeData={treeData}
 						defaultExpandAll
 						onSelect={handleRuleSelect}
@@ -90,7 +90,7 @@ const Rule = () => {
 				<Col md={8}>
 					<Row className="mb-3">
 						<Col>
-							<Input
+							<BCInput
 								value={selectedRule.name}
 								onChange={e =>
 									updateSelectedRule({ ...selectedRule, name: e.target.value })
@@ -110,7 +110,7 @@ const Rule = () => {
 							className="mb-3"
 						>
 							<Col>
-								<Select
+								<BCSelect
 									value={condition.when}
 									onChange={value => {
 										const updatedConditions = selectedRule.conditions.map(
@@ -129,8 +129,8 @@ const Rule = () => {
 								>
 									<Option value="option1">Option 1</Option>
 									<Option value="option2">Option 2</Option>
-								</Select>
-								<Select
+								</BCSelect>
+								<BCSelect
 									value={condition.condition}
 									onChange={value => {
 										const updatedConditions = selectedRule.conditions.map(
@@ -149,13 +149,13 @@ const Rule = () => {
 								>
 									<Option value="option1">Option 1</Option>
 									<Option value="option2">Option 2</Option>
-								</Select>
+								</BCSelect>
 							</Col>
 						</Row>
 					))}
 					<Row className="mb-3">
 						<Col>
-							<Button onClick={handleAddCondition}>Add New Condition</Button>
+							<BCButton onClick={handleAddCondition}>Add New Condition</BCButton>
 						</Col>
 					</Row>
 					<Row>
@@ -169,7 +169,7 @@ const Rule = () => {
 							className="mb-3"
 						>
 							<Col>
-								<Select
+								<BCSelect
 									value={action.then}
 									onChange={value => {
 										const updatedActions = selectedRule.actions.map(act =>
@@ -185,8 +185,8 @@ const Rule = () => {
 								>
 									<Option value="option1">Option 1</Option>
 									<Option value="option2">Option 2</Option>
-								</Select>
-								<Select
+								</BCSelect>
+								<BCSelect
 									value={action.action}
 									onChange={value => {
 										const updatedActions = selectedRule.actions.map(act =>
@@ -202,48 +202,48 @@ const Rule = () => {
 								>
 									<Option value="option1">Option 1</Option>
 									<Option value="option2">Option 2</Option>
-								</Select>
+								</BCSelect>
 							</Col>
 						</Row>
 					))}
 					<Row className="mb-3">
 						<Col>
-							<Button onClick={handleAddAction}>Add New Action</Button>
+							<BCButton onClick={handleAddAction}>Add New Action</BCButton>
 						</Col>
 					</Row>
 					<Row className="mb-3">
 						<Col>
-							<Button
+							<BCButton
 								type="primary"
 								onClick={handleSave}
 							>
 								Save
-							</Button>
+							</BCButton>
 						</Col>
 					</Row>
 				</Col>
 			</Row>
-			<Drawer
+			<BCDrawer
 				title="Add New Rule"
 				visible={isDrawerVisible}
 				onClose={() => setIsDrawerVisible(false)}
 				footer={
 					<div style={{ textAlign: 'right' }}>
-						<Button
+						<BCButton
 							onClick={handleAddNewRule}
 							type="primary"
 						>
 							Add Rule
-						</Button>
+						</BCButton>
 					</div>
 				}
 			>
-				<Input
+				<BCInput
 					value={newRuleName}
 					onChange={e => setNewRuleName(e.target.value)}
 					placeholder="Rule Name"
 				/>
-			</Drawer>
+			</BCDrawer>
 		</Container>
 	);
 };

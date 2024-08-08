@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Drawer, Form } from 'antd';
-import { BCInput, BCSelect, BCButton } from '@/commons/components';
+import { BCButton, BCDrawer, BCInput, BCSelect } from '@/commons/components';
+import { Form } from 'antd';
+import { useEffect, useState } from 'react';
 
 const typeOptions = [
 	{ value: 'text', label: 'Text' },
@@ -52,7 +52,7 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 	};
 
 	return (
-		<Drawer
+		<BCDrawer
 			title="Add Field"
 			open={isOpen}
 			onClose={onClose}
@@ -130,7 +130,7 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 					</>
 				)}
 			</Form>
-		</Drawer>
+		</BCDrawer>
 	);
 };
 

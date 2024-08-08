@@ -12,3 +12,5 @@ const BCTree = ({ treeData, onSelect, onExpand, ...props }) => {
 };
 
 export default BCTree;
+
+export { Tree };

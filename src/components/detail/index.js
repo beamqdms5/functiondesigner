@@ -1,5 +1,6 @@
+import { BCButton } from '@/commons/components';
 import { initialData } from '@/data/detailData';
-import { Button, Col, Form, Row } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import CustomTree from './customTree';
@@ -127,20 +128,20 @@ const DetailPage = () => {
 	return (
 		<div>
 			<h1>Detail Page</h1>
-			<Button
+			<BCButton
 				type="dashed"
 				onClick={handleAddButtonClick}
 				style={{ marginBottom: 16 }}
 			>
 				Add Field
-			</Button>
-			<Button
+			</BCButton>
+			<BCButton
 				type="primary"
 				onClick={handlePreviewButtonClick}
 				style={{ marginBottom: 16, marginLeft: 8 }}
 			>
 				Preview
-			</Button>
+			</BCButton>
 			<Row gutter={16}>
 				<Col span={12}>
 					<CustomTree

@@ -23,3 +23,5 @@ const BCSelect = ({ options, value, onChange, placeholder, ...props }) => {
 };
 
 export default BCSelect;
+
+export { Select };

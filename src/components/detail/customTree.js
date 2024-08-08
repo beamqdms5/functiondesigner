@@ -1,5 +1,4 @@
-import React from 'react';
-import { Tree, Button } from 'antd';
+import { BCButton, BCTree, Tree } from '@/commons/components';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { TreeNode } = Tree;
@@ -22,7 +21,7 @@ const CustomTree = ({ data, onTitleClick, onButtonClick }) => {
 						<span>
 							<span onClick={() => onTitleClick(item)}>{item.title}</span>
 							{isColumnType && !isGridColumn && (
-								<Button
+								<BCButton
 									type="text"
 									size="small"
 									shape="circle"
@@ -43,7 +42,7 @@ const CustomTree = ({ data, onTitleClick, onButtonClick }) => {
 			);
 		});
 
-	return <Tree defaultExpandAll>{renderTreeNodes(data)}</Tree>;
+	return <BCTree defaultExpandAll>{renderTreeNodes(data)}</BCTree>;
 };
 
 export default CustomTree;

@@ -1,7 +1,6 @@
-import { BCButton, BCTree, BCInput } from '@/commons/components';
+import { BCButton, BCDrawer, BCInput, BCTree } from '@/commons/components';
 import CustomDndTables from '@/components/customdndtables';
 import { queries as initialQueries } from '@/data/queries';
-import { Drawer } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { DndProvider } from 'react-dnd';
@@ -134,7 +133,7 @@ const Query = () => {
 					</DndProvider>
 				</Col>
 			</Row>
-			<Drawer
+			<BCDrawer
 				title="Add New Query"
 				visible={isDrawerVisible}
 				onClose={() => setIsDrawerVisible(false)}
@@ -154,7 +153,7 @@ const Query = () => {
 					onChange={e => setNewQueryName(e.target.value)}
 					placeholder="Query Name"
 				/>
-			</Drawer>
+			</BCDrawer>
 		</Container>
 	);
 };

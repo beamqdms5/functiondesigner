@@ -1,7 +1,5 @@
-import React from 'react';
-import { Drawer, Form, Button, Input, Checkbox } from 'antd';
-import BCInput from '@/commons/components/input';
-import BCSelect from '@/commons/components/select';
+import { BCButton, BCCheckbox, BCDrawer, BCInput } from '@/commons/components';
+import { Form } from 'antd';
 
 const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 	const [form] = Form.useForm();
@@ -19,7 +17,7 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 	};
 
 	return (
-		<Drawer
+		<BCDrawer
 			title="Add New Column"
 			width={360}
 			onClose={onClose}
@@ -30,18 +28,18 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 						textAlign: 'right'
 					}}
 				>
-					<Button
+					<BCButton
 						onClick={onClose}
 						style={{ marginRight: 8 }}
 					>
 						Cancel
-					</Button>
-					<Button
+					</BCButton>
+					<BCButton
 						onClick={handleAddColumn}
 						type="primary"
 					>
 						Add
-					</Button>
+					</BCButton>
 				</div>
 			}
 		>
@@ -70,10 +68,10 @@ const AddColumnDrawer = ({ open, onClose, onAddColumn }) => {
 					label="Primary Key?"
 					valuePropName="checked"
 				>
-					<Checkbox>Primary Key</Checkbox>
+					<BCCheckbox>Primary Key</BCCheckbox>
 				</Form.Item>
 			</Form>
-		</Drawer>
+		</BCDrawer>
 	);
 };
 

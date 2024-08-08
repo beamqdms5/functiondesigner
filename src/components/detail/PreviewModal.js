@@ -1,13 +1,5 @@
-import React from 'react';
-import { Modal, Form, Tabs, Row, Col, DatePicker, Checkbox, Table } from 'antd';
-
-import BCInput from '@/commons/components/input';
-import BCAutoComplete from '@/commons/components/autoComplete';
-import BCButton from '@/commons/components/button';
-import BCInputNumber from '@/commons/components/number';
-import BCSelect from '@/commons/components/select';
-import BCTextArea from '@/commons/components/textarea';
-import BCTree from '@/commons/components/tree';
+import { BCCheckbox, BCInput, BCInputNumber, BCSelect } from '@/commons/components';
+import { Col, DatePicker, Form, Modal, Row, Table, Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
@@ -61,7 +53,7 @@ const renderFormItem = node => {
 					key={node.key}
 					valuePropName="checked"
 				>
-					<Checkbox />
+					<BCCheckbox />
 				</Form.Item>
 			);
 		case 'tabs':
