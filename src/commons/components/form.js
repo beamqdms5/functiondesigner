@@ -19,3 +19,5 @@ const BCForm = ({ formItems, ...props }) => {
 };
 
 export default BCForm;
+
+export { Form };
