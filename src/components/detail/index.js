@@ -1,17 +1,18 @@
+import React, { useState, useEffect } from 'react';
+import { Form } from 'antd';
 import { BCButton, BCRow } from '@/commons/components';
 import { initialData } from '@/data/detailData';
-import { Form } from 'antd';
-import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import CustomTree from './customTree';
 import DetailDrawerAdd from './DetailDrawerAdd';
 import DetailDrawerUpdate from './DetailDrawerUpdate';
-import { onDrop, updateNode } from './functions/helper';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import PreviewModal from './PreviewModal';
+import { onDrop, handleAddNode, handleUpdateNode } from './functions/helper';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
-	const [isDrawerVisible, setisDrawerVisible] = useState(false);
+	const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 	const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
 	const [form] = Form.useForm();
@@ -23,54 +24,25 @@ const DetailPage = () => {
 		console.log(treeData);
 	}, [treeData]);
 
-	const handleDrop = info => onDrop(info, treeData, setTreeData);
-
-	const handleAddNode = values => {
-		const { column, ...newNode } = values;
-		newNode.key = uuidv4();
-
-		const addNodeRecursively = (nodes, targetKey, newNode) => {
-			return nodes.map(node => {
-				if (node.key === targetKey) {
-					return {
-						...node,
-						children: [...(node.children || []), newNode]
-					};
-				} else if (node.children) {
-					return {
-						...node,
-						children: addNodeRecursively(node.children, targetKey, newNode)
-					};
-				}
-				return node;
-			});
-		};
-
-		if (drawerType === 'add' && selectedNode) {
-			const updatedTreeData = addNodeRecursively(treeData, selectedNode.key, newNode);
-			setTreeData(updatedTreeData);
-		} else {
-			const updatedTreeData = treeData.map(node => {
-				if (node.name === column) {
-					return {
-						...node,
-						children: [...(node.children || []), newNode]
-					};
-				}
-				return node;
-			});
-			setTreeData(updatedTreeData);
-		}
-
-		setSelectedNode(null);
-		setSelectedColumn(null);
-		setParentType(null);
+	const handleDrop = (targetItem, draggedItem) => {
+		onDrop(targetItem, draggedItem, treeData, setTreeData);
 	};
 
-	const handleUpdateNode = values => {
-		const updatedValues = { ...selectedNode, ...values };
-		updateNode(updatedValues, treeData, setTreeData);
-		setSelectedNode(null);
+	const onAddNode = values => {
+		handleAddNode(
+			values,
+			treeData,
+			setTreeData,
+			drawerType,
+			selectedNode,
+			setSelectedNode,
+			setSelectedColumn,
+			setParentType
+		);
+	};
+
+	const onUpdateNode = values => {
+		handleUpdateNode(values, treeData, setTreeData, setSelectedNode);
 	};
 
 	const showDrawerAdd = node => {
@@ -79,18 +51,18 @@ const DetailPage = () => {
 		setSelectedColumn(node?.name || null);
 		setParentType(node?.type || null);
 		form.resetFields();
-		setisDrawerVisible(true);
+		setIsDrawerVisible(true);
 	};
 
 	const showDrawerUpdate = node => {
 		setSelectedNode(node);
 		setDrawerType('update');
 		form.setFieldsValue(node);
-		setisDrawerVisible(true);
+		setIsDrawerVisible(true);
 	};
 
 	const handleClose = () => {
-		setisDrawerVisible(false);
+		setIsDrawerVisible(false);
 		form.resetFields();
 		setSelectedNode(null);
 		setDrawerType(null);
@@ -104,7 +76,7 @@ const DetailPage = () => {
 		setSelectedColumn(null);
 		setParentType('column');
 		form.resetFields();
-		setisDrawerVisible(true);
+		setIsDrawerVisible(true);
 	};
 
 	const handleTitleClick = node => {
@@ -133,6 +105,7 @@ const DetailPage = () => {
 					data={treeData.filter(node => node.name === 'column1')}
 					onTitleClick={handleTitleClick}
 					onButtonClick={handleButtonClick}
+					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
 				/>
 			)
 		},
@@ -143,57 +116,60 @@ const DetailPage = () => {
 					data={treeData.filter(node => node.name === 'column2')}
 					onTitleClick={handleTitleClick}
 					onButtonClick={handleButtonClick}
+					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
 				/>
 			)
 		}
 	];
 
 	return (
-		<div>
-			<h1>Detail Page</h1>
-			<BCButton
-				type="dashed"
-				onClick={handleAddButtonClick}
-				style={{ marginBottom: 16 }}
-			>
-				Add Field
-			</BCButton>
-			<BCButton
-				type="primary"
-				onClick={handlePreviewButtonClick}
-				style={{ marginBottom: 16, marginLeft: 8 }}
-			>
-				Preview
-			</BCButton>
-			<BCRow
-				columns={columns}
-				gutter={16}
-			/>
-			{drawerType === 'add' && (
-				<DetailDrawerAdd
-					isOpen={isDrawerVisible}
-					onClose={handleClose}
-					onAddNode={handleAddNode}
-					form={form}
-					selectedColumn={selectedColumn}
-					parentType={parentType}
+		<DndProvider backend={HTML5Backend}>
+			<div>
+				<h1>Detail Page</h1>
+				<BCButton
+					type="dashed"
+					onClick={handleAddButtonClick}
+					style={{ marginBottom: 16 }}
+				>
+					Add Field
+				</BCButton>
+				<BCButton
+					type="primary"
+					onClick={handlePreviewButtonClick}
+					style={{ marginBottom: 16, marginLeft: 8 }}
+				>
+					Preview
+				</BCButton>
+				<BCRow
+					columns={columns}
+					gutter={16}
 				/>
-			)}
-			{drawerType === 'update' && (
-				<DetailDrawerUpdate
-					isOpen={isDrawerVisible}
-					onClose={handleClose}
-					onUpdateNode={handleUpdateNode}
-					form={form}
-					selectedNode={selectedNode}
+				{drawerType === 'add' && (
+					<DetailDrawerAdd
+						isOpen={isDrawerVisible}
+						onClose={handleClose}
+						onAddNode={onAddNode}
+						form={form}
+						selectedColumn={selectedColumn}
+						parentType={parentType}
+					/>
+				)}
+				{drawerType === 'update' && (
+					<DetailDrawerUpdate
+						isOpen={isDrawerVisible}
+						onClose={handleClose}
+						onUpdateNode={onUpdateNode}
+						form={form}
+						selectedNode={selectedNode}
+					/>
+				)}
+				<PreviewModal
+					visible={isPreviewVisible}
+					onClose={handlePreviewClose}
+					treeData={treeData}
 				/>
-			)}
-			<PreviewModal
-				visible={isPreviewVisible}
-				onClose={handlePreviewClose}
-				treeData={treeData}
-			/>
-		</div>
+			</div>
+		</DndProvider>
 	);
 };
 

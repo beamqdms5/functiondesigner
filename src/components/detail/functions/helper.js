@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { allowedChildTypes } from '@/data/detailData';
 
 export const loop = (data, key, callback) => {
 	data.forEach((item, index, arr) => {
@@ -22,71 +23,106 @@ export const findNode = (list, key) => {
 	return null;
 };
 
-export const onDrop = (info, treeData, setTreeData) => {
-	const dropKey = info.node.key;
-	const dragKey = info.dragNode.key;
-	const dropPos = info.node.pos.split('-');
-	const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
-
+export const onDrop = (targetItem, draggedItem, treeData, setTreeData) => {
 	const data = [...treeData];
-	let dragObj;
+	let dragObj = null;
 
-	loop(data, dragKey, (item, index, arr) => {
-		arr.splice(index, 1);
-		dragObj = item;
-	});
+	const isAllowed = allowedChildTypes[targetItem.type]?.includes(draggedItem.type);
 
-	const dropNode = findNode(data, dropKey);
-
-	if (!info.dropToGap) {
-		if (dropNode.type.startsWith('column')) {
-			loop(data, dropKey, item => {
-				item.children = item.children || [];
-				item.children.push(dragObj);
-			});
-		} else {
-			data.push(dragObj);
-		}
-	} else if ((info.node.children || []).length > 0 && info.node.expanded && dropPosition === 1) {
-		if (dropNode.type.startsWith('column')) {
-			loop(data, dropKey, item => {
-				item.children = item.children || [];
-				item.children.unshift(dragObj);
-			});
-		} else {
-			data.push(dragObj);
-		}
-	} else {
-		let ar;
-		let i;
-		loop(data, dropKey, (item, index, arr) => {
-			ar = arr;
-			i = index;
-		});
-		if (dropNode.type.startsWith('column')) {
-			if (dropPosition === -1) {
-				ar.splice(i, 0, dragObj);
-			} else {
-				ar.splice(i + 1, 0, dragObj);
+	const findAndRemoveNode = (nodes, key) => {
+		for (let i = 0; i < nodes.length; i++) {
+			if (nodes[i].key === key) {
+				dragObj = nodes[i];
+				nodes.splice(i, 1);
+				return;
+			} else if (nodes[i].children) {
+				findAndRemoveNode(nodes[i].children, key);
 			}
-		} else {
-			data.push(dragObj);
 		}
-	}
+	};
 
-	setTreeData(data);
+	if (isAllowed) {
+		findAndRemoveNode(data, draggedItem.key);
+
+		const addNodeToTarget = (nodes, targetKey, dragObj) => {
+			return nodes.map(node => {
+				if (node.key === targetKey) {
+					return {
+						...node,
+						children: [...(node.children || []), dragObj]
+					};
+				} else if (node.children) {
+					return {
+						...node,
+						children: addNodeToTarget(node.children, targetKey, dragObj)
+					};
+				}
+				return node;
+			});
+		};
+
+		const updatedTreeData = addNodeToTarget(data, targetItem.key, dragObj);
+		setTreeData(updatedTreeData);
+	} else {
+		setTreeData(data);
+	}
 };
 
-export const addNode = (values, treeData, setTreeData) => {
-	const newNode = {
-		key: uuidv4(),
-		title: values.title,
-		type: values.type,
-		name: values.name
-	};
-	const data = [...treeData, newNode];
-	setTreeData(data);
-	console.log(newNode);
+const addNodeRecursively = (nodes, targetKey, newNode) => {
+	return nodes.map(node => {
+		if (node.key === targetKey) {
+			return {
+				...node,
+				children: [...(node.children || []), newNode]
+			};
+		} else if (node.children) {
+			return {
+				...node,
+				children: addNodeRecursively(node.children, targetKey, newNode)
+			};
+		}
+		return node;
+	});
+};
+
+export const handleAddNode = (
+	values,
+	treeData,
+	setTreeData,
+	drawerType,
+	selectedNode,
+	setSelectedNode,
+	setSelectedColumn,
+	setParentType
+) => {
+	const { column, ...newNode } = values;
+	newNode.key = uuidv4();
+
+	if (drawerType === 'add' && selectedNode) {
+		const updatedTreeData = addNodeRecursively(treeData, selectedNode.key, newNode);
+		setTreeData(updatedTreeData);
+	} else {
+		const updatedTreeData = treeData.map(node => {
+			if (node.name === column) {
+				return {
+					...node,
+					children: [...(node.children || []), newNode]
+				};
+			}
+			return node;
+		});
+		setTreeData(updatedTreeData);
+	}
+
+	setSelectedNode(null);
+	setSelectedColumn(null);
+	setParentType(null);
+};
+
+export const handleUpdateNode = (values, treeData, setTreeData, setSelectedNode) => {
+	const updatedValues = { ...values };
+	updateNode(updatedValues, treeData, setTreeData);
+	setSelectedNode(null);
 };
 
 export const updateNode = (values, treeData, setTreeData) => {

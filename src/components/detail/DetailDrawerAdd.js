@@ -1,6 +1,7 @@
 import { BCButton, BCDrawer, BCInput, BCSelect } from '@/commons/components';
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
+import { allowedChildTypes } from '@/data/detailData';
 
 const typeOptions = [
 	{ value: 'text', label: 'Text' },
@@ -15,14 +16,6 @@ const typeOptions = [
 	{ value: 'tab', label: 'Tab' },
 	{ value: 'gridColumn', label: 'Grid Column' }
 ];
-
-const allowedChildTypes = {
-	column: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid', 'tabs'],
-	tabs: ['tab'],
-	tab: ['text', 'number', 'boolean', 'date', 'select', 'file', 'group', 'grid'],
-	group: ['text', 'number', 'boolean', 'date', 'select', 'file'],
-	grid: ['gridColumn']
-};
 
 const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, parentType }) => {
 	const [columnSelected, setColumnSelected] = useState(selectedColumn);
