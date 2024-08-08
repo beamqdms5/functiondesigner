@@ -95,37 +95,39 @@ const DetailPage = () => {
 	};
 
 	useEffect(() => {
-		const column = [
-			{
-				span: 12,
-				content: (
-					<CustomTree
-						data={treeData.filter(node => node.name === 'column1')}
-						onTitleClick={handleTitleClick}
-						onButtonClick={handleButtonClick}
-						handleDrop={(targetItem, draggedItem) =>
-							handleDrop(targetItem, draggedItem)
-						}
-					/>
-				)
-			},
-			{
-				span: 12,
-				content: (
-					<CustomTree
-						data={treeData.filter(node => node.name === 'column2')}
-						onTitleClick={handleTitleClick}
-						onButtonClick={handleButtonClick}
-						handleDrop={(targetItem, draggedItem) =>
-							handleDrop(targetItem, draggedItem)
-						}
-					/>
-				)
-			}
-		];
+		setTimeout(() => {
+			const column = [
+				{
+					span: 12,
+					content: (
+						<CustomTree
+							data={treeData.filter(node => node.name === 'column1')}
+							onTitleClick={handleTitleClick}
+							onButtonClick={handleButtonClick}
+							handleDrop={(targetItem, draggedItem) =>
+								handleDrop(targetItem, draggedItem)
+							}
+						/>
+					)
+				},
+				{
+					span: 12,
+					content: (
+						<CustomTree
+							data={treeData.filter(node => node.name === 'column2')}
+							onTitleClick={handleTitleClick}
+							onButtonClick={handleButtonClick}
+							handleDrop={(targetItem, draggedItem) =>
+								handleDrop(targetItem, draggedItem)
+							}
+						/>
+					)
+				}
+			];
 
-		setColumns(column);
-	}, [columns]);
+			setColumns(column);
+		}, 250);
+	}, []);
 
 	return (
 		<DndProvider backend={HTML5Backend}>
