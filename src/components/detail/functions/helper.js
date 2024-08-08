@@ -64,7 +64,31 @@ export const onDrop = (targetItem, draggedItem, treeData, setTreeData) => {
 		const updatedTreeData = addNodeToTarget(data, targetItem.key, dragObj);
 		setTreeData(updatedTreeData);
 	} else {
-		setTreeData(data);
+		const reorderNode = (nodes, targetKey, dragObj) => {
+			return nodes.map(node => {
+				if (node.children) {
+					const targetIndex = node.children.findIndex(child => child.key === targetKey);
+					const dragIndex = node.children.findIndex(
+						child => child.key === draggedItem.key
+					);
+					if (targetIndex !== -1 && dragIndex !== -1) {
+						const reorderedChildren = [...node.children];
+						const [draggedNode] = reorderedChildren.splice(dragIndex, 1);
+						reorderedChildren.splice(targetIndex, 0, draggedNode);
+						return {
+							...node,
+							children: reorderedChildren
+						};
+					} else if (node.children) {
+						node.children = reorderNode(node.children, targetKey, dragObj);
+					}
+				}
+				return node;
+			});
+		};
+
+		const updatedTreeData = reorderNode(data, targetItem.key, dragObj);
+		setTreeData(updatedTreeData);
 	}
 };
 
