@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Form, Button, Row, Col, Modal } from 'antd';
-import CustomTree from './customTree';
 import { initialData } from '@/data/detailData';
+import { Button, Col, Form, Row } from 'antd';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import CustomTree from './customTree';
 import DetailDrawerAdd from './DetailDrawerAdd';
 import DetailDrawerUpdate from './DetailDrawerUpdate';
-import { onDrop, addNode, updateNode, findNode } from './functions/helper';
-import { v4 as uuidv4 } from 'uuid';
+import { onDrop, updateNode } from './functions/helper';
 import PreviewModal from './PreviewModal';
 
 const DetailPage = () => {

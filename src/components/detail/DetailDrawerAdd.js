@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Drawer, Form } from 'antd';
-import BCInput from '@/commons/components/input';
-import BCButton from '@/commons/components/button';
-import BCSelect from '@/commons/components/select';
+import { BCInput, BCSelect, BCButton } from '@/commons/components';
 
 const typeOptions = [
 	{ value: 'text', label: 'Text' },

@@ -1,11 +1,11 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import { Tree, Drawer, Input, Button } from 'antd';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import BCButton from '@/commons/components/button';
+import { BCButton, BCTree, BCInput } from '@/commons/components';
 import CustomDndTables from '@/components/customdndtables';
 import { queries as initialQueries } from '@/data/queries';
+import { Drawer } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { v4 as uuidv4 } from 'uuid';
 
 const Query = () => {
@@ -112,7 +112,7 @@ const Query = () => {
 					>
 						Add New Query
 					</BCButton>
-					<Tree
+					<BCTree
 						treeData={treeData}
 						defaultExpandAll
 						onSelect={handleQuerySelect}
@@ -140,16 +140,16 @@ const Query = () => {
 				onClose={() => setIsDrawerVisible(false)}
 				footer={
 					<div style={{ textAlign: 'right' }}>
-						<Button
+						<BCButton
 							onClick={handleAddNewQuery}
 							type="primary"
 						>
 							Add Query
-						</Button>
+						</BCButton>
 					</div>
 				}
 			>
-				<Input
+				<BCInput
 					value={newQueryName}
 					onChange={e => setNewQueryName(e.target.value)}
 					placeholder="Query Name"
