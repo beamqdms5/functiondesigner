@@ -68,6 +68,7 @@ const CustomTree = ({ data, onTitleClick, onButtonClick, handleDrop }) => {
 		<BCTree
 			defaultExpandAll
 			blockNode
+			showLine
 		>
 			{renderTreeNodes(data)}
 		</BCTree>
