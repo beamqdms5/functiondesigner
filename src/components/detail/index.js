@@ -12,7 +12,6 @@ import PreviewModal from './PreviewModal';
 
 const DetailPage = () => {
 	const [treeData, setTreeData] = useState(initialData);
-	const [columns, setColumns] = useState([]);
 	const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 	const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 	const [selectedNode, setSelectedNode] = useState(null);
@@ -94,40 +93,30 @@ const DetailPage = () => {
 		setIsPreviewVisible(false);
 	};
 
-	useEffect(() => {
-		setTimeout(() => {
-			const column = [
-				{
-					span: 12,
-					content: (
-						<CustomTree
-							data={treeData.filter(node => node.name === 'column1')}
-							onTitleClick={handleTitleClick}
-							onButtonClick={handleButtonClick}
-							handleDrop={(targetItem, draggedItem) =>
-								handleDrop(targetItem, draggedItem)
-							}
-						/>
-					)
-				},
-				{
-					span: 12,
-					content: (
-						<CustomTree
-							data={treeData.filter(node => node.name === 'column2')}
-							onTitleClick={handleTitleClick}
-							onButtonClick={handleButtonClick}
-							handleDrop={(targetItem, draggedItem) =>
-								handleDrop(targetItem, draggedItem)
-							}
-						/>
-					)
-				}
-			];
-
-			setColumns(column);
-		}, 250);
-	}, []);
+	const columns = [
+		{
+			span: 12,
+			content: (
+				<CustomTree
+					data={treeData.filter(node => node.name === 'column1')}
+					onTitleClick={handleTitleClick}
+					onButtonClick={handleButtonClick}
+					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
+				/>
+			)
+		},
+		{
+			span: 12,
+			content: (
+				<CustomTree
+					data={treeData.filter(node => node.name === 'column2')}
+					onTitleClick={handleTitleClick}
+					onButtonClick={handleButtonClick}
+					handleDrop={(targetItem, draggedItem) => handleDrop(targetItem, draggedItem)}
+				/>
+			)
+		}
+	];
 
 	return (
 		<DndProvider backend={HTML5Backend}>
