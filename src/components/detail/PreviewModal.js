@@ -1,5 +1,5 @@
-import { BCCheckbox, BCInput, BCInputNumber, BCSelect } from '@/commons/components';
-import { Col, DatePicker, Form, Modal, Row, Table, Tabs } from 'antd';
+import { BCCheckbox, BCInput, BCInputNumber, BCSelect, BCTable } from '@/commons/components';
+import { Col, DatePicker, Form, Modal, Row, Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
@@ -101,7 +101,7 @@ const renderFormItem = node => {
 					label={node.title}
 					key={node.key}
 				>
-					<Table
+					<BCTable
 						columns={node.children?.map(child => ({
 							title: child.title,
 							dataIndex: child.name,

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'antd';
+import { BCButton, BCTable } from '@/commons/components';
 import { PlusOutlined } from '@ant-design/icons';
-import DroppableBody from './components/DroppableBody';
-import DraggableRow from './components/DraggableRow';
+import { useEffect, useState } from 'react';
 import AddColumnDrawer from './components/AddColumnDrawer';
-import { ItemType, updateOrder, moveRow } from './functions/helper';
+import DraggableRow from './components/DraggableRow';
+import DroppableBody from './components/DroppableBody';
+import { moveRow } from './functions/helper';
 
 const CustomDndTables = ({ initialColumns, onColumnsChange }) => {
 	const [columns, setColumns] = useState(initialColumns);
@@ -30,7 +30,7 @@ const CustomDndTables = ({ initialColumns, onColumnsChange }) => {
 	};
 
 	const renderTable = (data, fromTable) => (
-		<Table
+		<BCTable
 			columns={[{ title: 'Name', dataIndex: 'name', key: 'name' }]}
 			dataSource={data}
 			pagination={false}
@@ -69,13 +69,13 @@ const CustomDndTables = ({ initialColumns, onColumnsChange }) => {
 				{renderTable(visibleColumn, 'visibleColumn')}
 				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 					{renderTable(hiddenColumn, 'hiddenColumn')}
-					<Button
+					<BCButton
 						type="dashed"
 						onClick={() => setDrawerOpen(true)}
 						style={{ marginTop: 16, width: '100%' }}
 					>
 						<PlusOutlined /> Add Column
-					</Button>
+					</BCButton>
 				</div>
 			</div>
 			<AddColumnDrawer
