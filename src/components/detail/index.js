@@ -1,6 +1,6 @@
-import { BCButton } from '@/commons/components';
+import { BCButton, BCRow } from '@/commons/components';
 import { initialData } from '@/data/detailData';
-import { Col, Form, Row } from 'antd';
+import { Form } from 'antd';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import CustomTree from './customTree';
@@ -125,6 +125,29 @@ const DetailPage = () => {
 		setIsPreviewVisible(false);
 	};
 
+	const columns = [
+		{
+			span: 12,
+			content: (
+				<CustomTree
+					data={treeData.filter(node => node.name === 'column1')}
+					onTitleClick={handleTitleClick}
+					onButtonClick={handleButtonClick}
+				/>
+			)
+		},
+		{
+			span: 12,
+			content: (
+				<CustomTree
+					data={treeData.filter(node => node.name === 'column2')}
+					onTitleClick={handleTitleClick}
+					onButtonClick={handleButtonClick}
+				/>
+			)
+		}
+	];
+
 	return (
 		<div>
 			<h1>Detail Page</h1>
@@ -142,22 +165,10 @@ const DetailPage = () => {
 			>
 				Preview
 			</BCButton>
-			<Row gutter={16}>
-				<Col span={12}>
-					<CustomTree
-						data={treeData.filter(node => node.name === 'column1')}
-						onTitleClick={handleTitleClick}
-						onButtonClick={handleButtonClick}
-					/>
-				</Col>
-				<Col span={12}>
-					<CustomTree
-						data={treeData.filter(node => node.name === 'column2')}
-						onTitleClick={handleTitleClick}
-						onButtonClick={handleButtonClick}
-					/>
-				</Col>
-			</Row>
+			<BCRow
+				columns={columns}
+				gutter={16}
+			/>
 			{drawerType === 'add' && (
 				<DetailDrawerAdd
 					isOpen={isDrawerVisible}
