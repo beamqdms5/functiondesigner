@@ -1,14 +1,7 @@
 import { Tree } from 'antd';
 
-const BCTree = ({ treeData, onSelect, onExpand, ...props }) => {
-	return (
-		<Tree
-			treeData={treeData}
-			onSelect={onSelect}
-			onExpand={onExpand}
-			{...props}
-		/>
-	);
+const BCTree = ({ ...props }) => {
+	return <Tree {...props} />;
 };
 
 export default BCTree;

@@ -1,7 +1,6 @@
-import { useDrag, useDrop } from 'react-dnd';
-import { BCButton } from '@/commons/components';
+import { BCButton, BCTree, Tree } from '@/commons/components';
 import { PlusOutlined } from '@ant-design/icons';
-import { Tree } from 'antd';
+import { useDrag, useDrop } from 'react-dnd';
 
 const { TreeNode } = Tree;
 
@@ -66,12 +65,12 @@ const CustomTree = ({ data, onTitleClick, onButtonClick, handleDrop }) => {
 		));
 
 	return (
-		<Tree
+		<BCTree
 			defaultExpandAll
 			blockNode
 		>
 			{renderTreeNodes(data)}
-		</Tree>
+		</BCTree>
 	);
 };
 
