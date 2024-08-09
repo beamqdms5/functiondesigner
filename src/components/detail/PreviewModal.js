@@ -117,17 +117,25 @@ const renderFormItem = node => {
 	}
 };
 
-const renderColumn = column => (
-	<Col
-		span={12}
-		key={column.key}
-		className="my-3"
-	>
-		<Form layout="vertical">
-			{column.children && column.children.map(child => renderFormItem(child))}
-		</Form>
-	</Col>
-);
+const renderColumn = (column, totalColumns) => {
+	const validColCounts = totalColumns.filter(
+		col => col.children && col.children.length > 0
+	).length;
+
+	const colSpan = 24 / validColCounts;
+
+	return (
+		<Col
+			span={colSpan}
+			key={column.key}
+			className="my-3"
+		>
+			<Form layout="vertical">
+				{column.children && column.children.map(child => renderFormItem(child))}
+			</Form>
+		</Col>
+	);
+};
 
 const PreviewModal = ({ visible, onClose, treeData }) => {
 	const columns = treeData.filter(node => node.type === 'column');
@@ -140,7 +148,7 @@ const PreviewModal = ({ visible, onClose, treeData }) => {
 			footer={null}
 			width={800}
 		>
-			<Row gutter={16}>{columns.map(column => renderColumn(column))}</Row>
+			<Row gutter={16}>{columns.map(column => renderColumn(column, columns))}</Row>
 		</Modal>
 	);
 };
