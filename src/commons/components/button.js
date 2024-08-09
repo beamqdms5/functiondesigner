@@ -1,15 +1,7 @@
 import { Button } from 'antd';
 
-const BCButton = ({ type, onClick, children, ...props }) => {
-	return (
-		<Button
-			type={type}
-			onClick={onClick}
-			{...props}
-		>
-			{children}
-		</Button>
-	);
+const BCButton = ({ ...props }) => {
+	return <Button {...props}>{children}</Button>;
 };
 
 export default BCButton;

@@ -2,14 +2,9 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-const BCSelect = ({ options, value, onChange, placeholder, ...props }) => {
+const BCSelect = ({ options, ...props }) => {
 	return (
-		<Select
-			value={value}
-			onChange={onChange}
-			placeholder={placeholder}
-			{...props}
-		>
+		<Select {...props}>
 			{options?.map((option, index) => (
 				<Option
 					key={index}

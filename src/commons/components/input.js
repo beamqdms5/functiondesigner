@@ -1,14 +1,7 @@
 import { Input } from 'antd';
 
-const BCInput = ({ placeholder, value, onChange, ...props }) => {
-	return (
-		<Input
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-			{...props}
-		/>
-	);
+const BCInput = ({ ...props }) => {
+	return <Input {...props} />;
 };
 
 export default BCInput;

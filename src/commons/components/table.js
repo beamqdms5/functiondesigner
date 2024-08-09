@@ -1,14 +1,7 @@
 import { Table } from 'antd';
 
-const BCTable = ({ columns, dataSource, pagination, ...props }) => {
-	return (
-		<Table
-			columns={columns}
-			dataSource={dataSource}
-			pagination={pagination}
-			{...props}
-		/>
-	);
+const BCTable = ({ ...props }) => {
+	return <Table {...props} />;
 };
 
 export default BCTable;

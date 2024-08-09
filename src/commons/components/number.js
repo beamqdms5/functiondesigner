@@ -1,11 +1,9 @@
 import { Input } from 'antd';
 
-const BCInputNumber = ({ value, onChange, ...props }) => {
+const BCInputNumber = ({ ...props }) => {
 	return (
 		<Input
 			type="number"
-			value={value}
-			onChange={onChange}
 			{...props}
 		/>
 	);
