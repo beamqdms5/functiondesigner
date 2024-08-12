@@ -1,6 +1,7 @@
 export { default as BCAutoComplete } from './autoComplete';
 export { default as BCButton } from './button';
 export { default as BCCheckbox } from './checkbox';
+export { default as BCDatePicker } from './datepicker';
 export { default as BCDrawer } from './drawer';
 export { default as BCForm, Form } from './form';
 export { default as BCInput } from './input';

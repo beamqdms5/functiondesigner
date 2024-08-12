@@ -1,12 +1,13 @@
 import {
 	BCCheckbox,
+	BCDatePicker,
 	BCInput,
 	BCInputNumber,
 	BCSelect,
 	BCTable,
 	BCTabs
 } from '@/commons/components';
-import { Col, DatePicker, Form, Modal, Row } from 'antd';
+import { Col, Form, Modal, Row } from 'antd';
 
 const renderFormItem = node => {
 	switch (node.type) {
@@ -47,7 +48,7 @@ const renderFormItem = node => {
 					label={node.title}
 					key={node.key}
 				>
-					<DatePicker />
+					<BCDatePicker />
 				</Form.Item>
 			);
 		case 'boolean':
