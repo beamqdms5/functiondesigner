@@ -1,5 +1,4 @@
-import { BCButton, BCDrawer, BCInput, BCSelect } from '@/commons/components';
-import { Form } from 'antd';
+import { BCButton, BCDrawer, BCForm, BCInput, BCSelect } from '@/commons/components';
 import { useEffect } from 'react';
 
 const typeOptions = [
@@ -29,6 +28,32 @@ const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode 
 		});
 	};
 
+	const formItems = [
+		{
+			label: 'Title',
+			name: 'title',
+			rules: [{ required: true, message: 'Please enter the title!' }],
+			component: <BCInput />
+		},
+		{
+			label: 'Name',
+			name: 'name',
+			rules: [{ required: true, message: 'Please enter the name!' }],
+			component: <BCInput />
+		},
+		{
+			label: 'Type',
+			name: 'type',
+			rules: [{ required: true, message: 'Please select the field type' }],
+			component: (
+				<BCSelect
+					placeholder="Select type"
+					options={typeOptions}
+				/>
+			)
+		}
+	];
+
 	return (
 		<BCDrawer
 			title="Update Field"
@@ -52,36 +77,12 @@ const DetailDrawerUpdate = ({ isOpen, onClose, onUpdateNode, form, selectedNode 
 				</div>
 			}
 		>
-			<Form
+			<BCForm
 				form={form}
-				layout="vertical"
 				name="updateNodeForm"
-			>
-				<Form.Item
-					name="title"
-					label="Title"
-					rules={[{ required: true, message: 'Please enter the title!' }]}
-				>
-					<BCInput />
-				</Form.Item>
-				<Form.Item
-					name="name"
-					label="Name"
-					rules={[{ required: true, message: 'Please enter the name!' }]}
-				>
-					<BCInput />
-				</Form.Item>
-				<Form.Item
-					name="type"
-					label="Type"
-					rules={[{ required: true, message: 'Please select the field type' }]}
-				>
-					<BCSelect
-						placeholder="Select type"
-						options={typeOptions}
-					/>
-				</Form.Item>
-			</Form>
+				layout="vertical"
+				formItems={formItems}
+			/>
 		</BCDrawer>
 	);
 };

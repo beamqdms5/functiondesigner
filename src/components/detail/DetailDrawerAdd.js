@@ -1,7 +1,7 @@
 import { BCButton, BCDrawer, BCInput, BCSelect } from '@/commons/components';
+import { allowedChildTypes } from '@/data/detailData';
 import { Form } from 'antd';
 import { useEffect, useState } from 'react';
-import { allowedChildTypes } from '@/data/detailData';
 
 const typeOptions = [
 	{ value: 'text', label: 'Text' },
@@ -32,6 +32,10 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 
 	const handleOk = () => {
 		form.validateFields().then(values => {
+			if (selectedColumn === 'tabmenu') {
+				values.type = 'tab';
+			}
+
 			onAddNode({ ...values, column: columnSelected });
 			onClose();
 			form.resetFields();
@@ -104,22 +108,28 @@ const DetailDrawerAdd = ({ isOpen, onClose, onAddNode, form, selectedColumn, par
 						>
 							<BCInput />
 						</Form.Item>
-						<Form.Item
-							name="type"
-							label="Type"
-							rules={[{ required: true, message: 'Please select the field type' }]}
-						>
-							<BCSelect
-								placeholder="Select type"
-								options={
-									allowedChildTypes[parentType]
-										? allowedChildTypes[parentType].map(type =>
-												typeOptions.find(option => option.value === type)
-											)
-										: typeOptions
-								}
-							/>
-						</Form.Item>
+						{selectedColumn !== 'tabmenu' && (
+							<Form.Item
+								name="type"
+								label="Type"
+								rules={[
+									{ required: true, message: 'Please select the field type' }
+								]}
+							>
+								<BCSelect
+									placeholder="Select type"
+									options={
+										allowedChildTypes[parentType]
+											? allowedChildTypes[parentType].map(type =>
+													typeOptions.find(
+														option => option.value === type
+													)
+												)
+											: typeOptions
+									}
+								/>
+							</Form.Item>
+						)}
 					</>
 				)}
 			</Form>

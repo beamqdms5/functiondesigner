@@ -1,7 +1,12 @@
-import { BCCheckbox, BCInput, BCInputNumber, BCSelect, BCTable } from '@/commons/components';
-import { Col, DatePicker, Form, Modal, Row, Tabs } from 'antd';
-
-const { TabPane } = Tabs;
+import {
+	BCCheckbox,
+	BCInput,
+	BCInputNumber,
+	BCSelect,
+	BCTable,
+	BCTabs
+} from '@/commons/components';
+import { Col, DatePicker, Form, Modal, Row } from 'antd';
 
 const renderFormItem = node => {
 	switch (node.type) {
@@ -62,20 +67,15 @@ const renderFormItem = node => {
 					label={node.title}
 					key={node.key}
 				>
-					<Tabs>
-						{node.children &&
-							node.children.map(child => (
-								<TabPane
-									tab={child.title}
-									key={child.key}
-								>
-									{child.children &&
-										child.children.map(grandChild =>
-											renderFormItem(grandChild)
-										)}
-								</TabPane>
-							))}
-					</Tabs>
+					<BCTabs
+						tabs={node.children?.map(child => ({
+							title: child.title,
+							key: child.key,
+							content: (
+								<>{child.children?.map(grandChild => renderFormItem(grandChild))}</>
+							)
+						}))}
+					/>
 				</Form.Item>
 			);
 		case 'group':
@@ -118,9 +118,7 @@ const renderFormItem = node => {
 };
 
 const renderColumn = (column, totalColumns) => {
-	const validColCounts = totalColumns.filter(
-		col => col.children && col.children.length > 0
-	).length;
+	const validColCounts = totalColumns.filter(col => col.children?.length > 0).length;
 
 	const colSpan = 24 / validColCounts;
 
@@ -130,9 +128,7 @@ const renderColumn = (column, totalColumns) => {
 			key={column.key}
 			className="my-3"
 		>
-			<Form layout="vertical">
-				{column.children && column.children.map(child => renderFormItem(child))}
-			</Form>
+			<Form layout="vertical">{column.children?.map(child => renderFormItem(child))}</Form>
 		</Col>
 	);
 };

@@ -8,4 +8,5 @@ export { default as BCInputNumber } from './number';
 export { default as BCRow } from './row';
 export { default as BCSelect, Select } from './select';
 export { default as BCTable } from './table';
+export { default as BCTabs } from './tabs';
 export { default as BCTree, Tree } from './tree';

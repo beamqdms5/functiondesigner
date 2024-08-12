@@ -1,7 +1,6 @@
-import { BCButton, BCRow } from '@/commons/components';
+import { BCButton, BCRow, Form } from '@/commons/components';
 import { initialData } from '@/data/detailData';
-import { Form } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import CustomTree from './customTree';
